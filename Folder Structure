@@ -1,0 +1,24 @@
+ASSET-MAINTENANCE-MALL/
+├── backend/
+│   ├── config/               # Configuration files (DB, environment)
+│   ├── controllers/          # API Controllers
+│   ├── models/               # ORM models (e.g., Sequelize, TypeORM)
+│   ├── migrations/           # Database migrations
+│   ├── routes/               # API routes
+│   ├── services/             # Business logic or services
+│   ├── utils/                # Utility functions
+│   ├── app.js                # Main backend entry point
+│   ├── server.js             # Server setup
+│   └── .env                  # Environment variables (DB credentials, etc.)
+│
+├── frontend/
+│   ├── public/               # Public assets (index.html, favicon, etc.)
+│   ├── src/
+│   │   ├── components/       # React/Vue components or UI elements
+│   │   ├── pages/            # Page components
+│   │   ├── services/         # Frontend services to interact with the backend API
+│   │   ├── store/            # State management (Redux, Vuex, etc.)
+│   │   ├── styles/           # CSS or SCSS files
+│   │   ├── App.js            # Main frontend entry point
+│   │   └── index.js          # React or Vue app initialization
+│   └── package.json      
