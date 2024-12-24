@@ -1,0 +1,57 @@
+flowchart TD
+    Start([Start]) --> Login[/Login Form/]
+    Login --> AuthCheck{Authenticate}
+    AuthCheck -->|Invalid| Login
+    
+    AuthCheck -->|Valid| RoleCheck{Check Role}
+    
+    %% Admin Flow
+    RoleCheck -->|Admin| AdminDash[Admin Dashboard]
+    AdminDash --> AM[Asset Management]
+    AdminDash --> UM[User Management]
+    AdminDash --> SM[System Management]
+    
+    AM --> CreateAsset[Create Asset]
+    AM --> EditAsset[Edit Asset]
+    AM --> GenQR[Generate QR]
+    
+    UM --> CreateUser[Create User]
+    UM --> EditUser[Edit User]
+    UM --> AssignRole[Assign Role]
+    
+    %% Supervisor Flow
+    RoleCheck -->|Supervisor| SupervisorDash[Supervisor Dashboard]
+    SupervisorDash --> CreateTask[Create Maintenance Task]
+    SupervisorDash --> AssignTask[Assign to Technician]
+    SupervisorDash --> MonitorTask[Monitor Progress]
+    
+    CreateTask --> SelectAsset[Select Asset]
+    SelectAsset --> DefineChecklist[Define Checklist]
+    DefineChecklist --> SetSchedule[Set Schedule]
+    
+    %% Technician Flow
+    RoleCheck -->|Technician| TechDash[Technician Dashboard]
+    TechDash --> ViewTasks[View Assigned Tasks]
+    TechDash --> ScanQR[Scan QR Code]
+    
+    ScanQR --> ValidateQR{Validate QR}
+    ValidateQR -->|Valid| UpdateStatus[Update Status]
+    ValidateQR -->|Invalid| ErrorLog[Log Error]
+    
+    UpdateStatus --> CompleteTask{Complete?}
+    CompleteTask -->|Yes| CloseTask[Close Task]
+    CompleteTask -->|No| AddNotes[Add Notes]
+    
+    %% Manager Flow
+    RoleCheck -->|Manager| ManagerDash[Manager Dashboard]
+    ManagerDash --> ViewReports[View Reports]
+    ManagerDash --> AnalyzePerf[Analyze Performance]
+    ManagerDash --> ExportData[Export Data]
+    
+    %% Common Endpoints
+    CloseTask --> Logout
+    ErrorLog --> Logout
+    ExportData --> Logout
+    AddNotes --> Logout
+    
+    Logout[/Logout/] --> End([End])

@@ -1,0 +1,53 @@
+graph LR
+    %% External Entities
+    Admin((Admin))
+    Manager((Manager))
+    Supervisor((Supervisor))
+    Technician((Technician))
+
+    %% Data Stores
+    DB_Users[(Users DB)]
+    DB_Assets[(Assets DB)]
+    DB_Maintenance[(Maintenance DB)]
+    DB_Audit[(Audit Logs)]
+    DB_Templates[(Templates DB)]
+
+    %% Main Processes
+    P1[Authentication & Authorization]
+    P2[Asset Management]
+    P3[QR Code Management]
+    P4[Maintenance Management]
+    P5[Report Generation]
+    P6[Audit Logging]
+
+    %% Admin Flows
+    Admin -->|Manage Users| P1
+    Admin -->|Configure System| P2
+    P1 -->|Store User Data| DB_Users
+    P1 -->|Verify Access| DB_Users
+
+    %% Manager Flows
+    Manager -->|View Reports| P5
+    P5 -->|Get Asset Data| DB_Assets
+    P5 -->|Get Maintenance Data| DB_Maintenance
+    P5 -->|Get Audit Data| DB_Audit
+
+    %% Supervisor Flows
+    Supervisor -->|Create Templates| P4
+    Supervisor -->|Assign Tasks| P4
+    P4 -->|Store Templates| DB_Templates
+    P4 -->|Update Maintenance| DB_Maintenance
+
+    %% Technician Flows
+    Technician -->|Scan QR| P3
+    Technician -->|Update Maintenance| P4
+    P3 -->|Validate Asset| DB_Assets
+    P3 -->|Log Scan| DB_Audit
+    P4 -->|Record Activity| DB_Maintenance
+
+    %% Cross-cutting Processes
+    P6 -->|Log Activities| DB_Audit
+    P1 -.->|Log Access| P6
+    P2 -.->|Log Changes| P6
+    P3 -.->|Log Scans| P6
+    P4 -.->|Log Updates| P6
